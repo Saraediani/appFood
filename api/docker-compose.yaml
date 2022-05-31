@@ -1,0 +1,32 @@
+version: '3.9'
+
+services:
+  mongodb:
+    image: mongo:latest
+    restart: always
+    ports:
+      - 2717:27017
+    volumes:
+      - mongodb:/data/db
+
+  api:
+    build: ./
+    container_name: api-container
+    ports:
+      - 5000:8080
+    volumes:
+      - ./:/app
+      - ./app:/node_modules
+    environment:
+      Port: 8080
+      MONGO_URI: mongodb://mongodb:27017/Booking
+      ACCESS_TOKEN_SECRET_KEY: 4e0ae3ab69656c18466e92550d0f4476a8f34baea783e60d384d50df853429fd08601ec4643a084b47262beded4aebf12377126a0a23e1ca00bbf62bee792f8a
+      REFRESH_TOKEN_SECRET_KEY: 16ca7c70ea6790e76a1f645c342c13490d4650a8c84ebe81ef8cdd5942ad207e8a9a93e298e286f2b9c7922dab98b248f18f752c5c8d0a629ed333d42ccb87aa
+      AUTH_EMAIL:  "ttestest336@gmail.com"
+      AUTH_PASSWORD:  "L#l)uch#"
+    depends_on:
+      - mongodb
+
+volumes: 
+  mongodb:     
+
